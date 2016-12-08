@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<!--[if IE 8]> <html lang="en" class="ie8"> <![endif]-->
+<!--[if !IE]><!-->
+<html lang="en">
+<!--<![endif]-->
+<head>
+        <meta charset="utf-8" />
+        <title>Spinal Admin Dashboard | Tree View</title>
+        <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport" />
+        <meta content="" name="description" />
+        <meta content="" name="author" />
+
+        <!-- ================== BEGIN BASE CSS STYLE ================== -->
+        <link href="http://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
+        <link href="utility_admin-dashboard/assets/plugins/jquery-ui/themes/base/minified/jquery-ui.min.css" rel="stylesheet" />
+        <link href="utility_admin-dashboard/assets/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+        <link href="utility_admin-dashboard/assets/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+        <link href="utility_admin-dashboard/assets/css/animate.min.css" rel="stylesheet" />
+        <link href="utility_admin-dashboard/assets/css/style.min.css" rel="stylesheet" />
+        <link href="utility_admin-dashboard/assets/css/style-responsive.min.css" rel="stylesheet" />
+        <link href="utility_admin-dashboard/assets/css/theme/default.css" rel="stylesheet" id="theme" />
+        <link href="utility_admin-dashboard/assets/css/theme/blue.css" rel="stylesheet" id="theme" />
+        <!-- ================== END BASE CSS STYLE ================== -->
+
+        <!-- ================== BEGIN PAGE LEVEL JS ================== -->
+        <link href="utility_admin-dashboard/assets/plugins/jstree/dist/themes/default/style.min.css" rel="stylesheet" />
+        <link href="utility_admin-dashboard/assets/plugins/gritter/css/jquery.gritter.css" rel="stylesheet" />
+        <link href="utility_admin-dashboard/SpinalAdmin/admin.stylesheets.css" rel="stylesheet" id="theme" />
+        <!-- ================== END PAGE LEVEL JS ================== -->
+
+        <!-- ================== BEGIN BASE JS ================== -->
+<!--         <script src="assets/plugins/pace/pace.min.js"></script> -->
+        <!-- ================== END BASE JS ================== -->
+</head>
+<body>
+        <!-- begin #page-loader -->
+       <div id="page-loader" class="fade in"><span class="spinner"></span></div>
+        <!-- end #page-loader -->
+
+        <!-- begin #page-container -->
+<!--         <div id="page-container" class="fade page-header-fixed page-sidebar-fixed page-with-light-sidebar page-with-two-sidebar"> -->
+        <div id="page-container" class="fade page-sidebar-fixed page-header-fixed">
+            <div id="header" class="header navbar navbar-default navbar-fixed-top">
+                <div class="container-fluid">
+                    <div class="navbar-header">
+                        <a href="#" class="navbar-brand"><span class="navbar-logo"></span>Admin Dashboard</a>
+                        <!-- <button type="button" class="navbar-toggle" data-click="sidebar-toggled">
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                        </button> -->
+                    </div>
+                    <dir>
+                      <button type="button" class="btn btn-danger" style="right: 20px;position: absolute;" onclick="admin_dashboard.disconnect()">
+                          <i class="fa fa-sign-out"></i> Disconnect
+                      </button>
+                      <!-- <button type="button" name="button">disconnect</button> -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- begin #sidebar -->
+            <div id="sidebar" class="sidebar">
+                  <div data-scrollbar="true" data-height="100%">
+                      <ul class="nav">
+                          <li class="has-sub active">
+                              <a href="javascript:;">
+                                  <b class="caret pull-right"></b>
+                                  <i class="fa fa-laptop"></i>
+                                  <span>Navigation</span>
+                              </a>
+                              <ul class="sub-menu">
+                                  <li class="active"><a href="admin-dashboard.html">Database</a></li>
+                                  <li><a href="admin-dashboard.html">Users</a></li>
+                              </ul>
+                          </li>
+                      </ul>
+                      <ul class="nav">
+                              <li class="nav-profile">
+                              <hr style="padding-top: 10px; padding-botton: 10px;" />
+                                  <button type="button" class="btn btn-primary btn-block" id="btn_garbage_collector">
+                                      <i class="fa fa-trash-o"></i> Garbage Collector
+                                  </button>
+                              </li>
+                              <li class="nav-profile">
+                                  <button type="button" class="btn btn-primary btn-block" id="btn_backup">
+                                      <i class="fa fa-archive"></i> Back Up
+                                  </button>
+                              </li>
+                              <li><a href="javascript:;" class="sidebar-minify-btn" data-click="sidebar-minify"><i class="fa fa-angle-double-left"></i></a></li>
+                      </ul>
+                      </div>
+            </div>
+           <div class="sidebar-bg"></div>
+            <!-- end #sidebar -->
+
+            <!-- begin #content -->
+            <div id="content" class="content ">
+                <ol class="breadcrumb pull-right">
+                    <li><a href="javascript:;">Home</a></li>
+                    <li class="active">Dashboard</li>
+                </ol>
+                <h1 class="page-header">Dashboard</h1>
+
+                <div class="row">
+                <div class="col-md-12">
+                <div class="panel panel-inverse ">
+                    <div class="panel-heading">
+                        <div class="panel-heading-btn">
+                            <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-default" data-click="panel-expand"><i class="fa fa-expand"></i></a>
+                            <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse"><i class="fa fa-minus"></i></a>
+                            <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-danger" data-click="panel-remove"><i class="fa fa-times"></i></a>
+                        </div>
+                        <h4 class="panel-title">Stats</h4>
+                    </div>
+                    <div class="panel-body">
+                        <table class="table">
+                          <col width="10%">
+                          <col width="10%">
+                          <col width="80%">
+                          <thead>
+                            <tr> <th>Label</th> <th>Value</th> <th>Trend</th> </tr>
+                          </thead>
+                          <tbody id="admin_details">
+                          </tbody>
+                        </table>
+                    </div>
+                </div>
+                </div>
+                <div class="col-md-3">
+               <div class="panel panel-inverse">
+                    <div class="panel-heading">
+                        <div class="panel-heading-btn">
+                            <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-default" data-click="panel-expand"><i class="fa fa-expand"></i></a>
+                            <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse"><i class="fa fa-minus"></i></a>
+                            <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-danger" data-click="panel-remove"><i class="fa fa-times"></i></a>
+                        </div>
+                        <h4 class="panel-title">File Systeme</h4>
+                    </div>
+                    <div class="panel-body" style="overflow: auto">
+                        <div style="height: 600px;">
+                          <div id="jstree2-ajax"></div>
+                        </div>
+                    </div>
+                </div>
+                </div>
+                <div class="col-md-9">
+                <div class="panel panel-inverse">
+                    <div class="panel-heading">
+                        <div class="panel-heading-btn">
+                            <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-default" data-click="panel-expand"><i class="fa fa-expand"></i></a>
+                            <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse"><i class="fa fa-minus"></i></a>
+                            <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-danger" data-click="panel-remove"><i class="fa fa-times"></i></a>
+                        </div>
+                        <h4 class="panel-title">File content</h4>
+                    </div>
+                    <div class="panel-body">
+                        <div id="file-content" class="svg-container">
+                            <div class="btn-group" role="group" style="position: absolute; z-index:99;">
+                                <button type="button" class="btn btn-primary" id="tree_center_root">Center Root</button>
+                                <button type="button" class="btn btn-primary" id="tree_zoom_root">Full</button>
+                            </div>
+                            <div class="input-group" style="position: absolute; z-index:99; width:300px; right:5px;">
+                                <input type="text" class="form-control search_input" placeholder="Search" id="search_tree_input">
+                                <div class="input-group-btn">
+                                    <span type="button" class="btn btn-info" id="search_tree_res">0/0</span>
+                                    <button type="button" class="btn btn-primary" id="search_tree_prev">&lt;</button>
+                                    <button type="button" class="btn btn-primary" id="search_tree_next">&gt;</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                </div>
+                <div class="col-md-12">
+
+                <div class="panel panel-inverse">
+                    <div class="panel-heading">
+                        <div class="panel-heading-btn">
+                            <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-default" data-click="panel-expand"><i class="fa fa-expand"></i></a>
+                            <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse"><i class="fa fa-minus"></i></a>
+                            <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-danger" data-click="panel-remove"><i class="fa fa-times"></i></a>
+                        </div>
+                        <h4 class="panel-title">User Manager</h4>
+                    </div>
+                    <div class="panel-body">
+                        <div>
+                          <h4>User List</h4>
+                            <div style="overflow: auto">
+                                <table class="table">
+                                  <thead>
+                                    <tr> <th style="width:10px; padding:10px 0px;"></th>  <th>Id</th> <th>User</th> <th>Password</th> <th>State</th>  <th>Home</th> <th>Type</th> </tr>
+                                  </thead>
+                                  <tbody id="user_list">
+                                  </tbody>
+                                </table>
+                            </div>
+                            <br />
+                            <!-- <div class="input-group"> -->
+                            <form action="javascript:usermanager_view.add();" class="input-group">
+                              <h4>New User</h4>
+
+                              <input id="input_user" type="text" class="form-control" placeholder="User">
+                              <input id="input_password" type="text" class="form-control" placeholder="Password">
+                              <button id="btn_push_user" class="btn btn-success">add</button>
+                            </form>
+                            <!-- </div> -->
+                        </div>
+                    </div>
+                </div>
+                </div>
+                <!-- <div class="col-md-12">
+                <div class="panel panel-inverse">
+                    <div class="panel-heading">
+                        <div class="panel-heading-btn">
+                            <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-default" data-click="panel-expand"><i class="fa fa-expand"></i></a>
+                            <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse"><i class="fa fa-minus"></i></a>
+                            <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-danger" data-click="panel-remove"><i class="fa fa-times"></i></a>
+                        </div>
+                        <h4 class="panel-title">TEST it</h4>
+                    </div>
+                    <div class="panel-body">
+                    </div>
+                </div>
+                </div> -->
+            </div>
+            </div>
+
+            <!-- end #content -->
+
+            <!-- begin scroll to top btn -->
+            <a href="javascript:;" class="btn btn-icon btn-circle btn-success btn-scroll-to-top fade" data-click="scroll-top"><i class="fa fa-angle-up"></i></a>
+            <!-- end scroll to top btn -->
+        </div>
+        <!-- end page container -->
+
+        <!-- ================== BEGIN BASE JS ================== -->
+        <script src="utility_admin-dashboard/assets/plugins/jquery/jquery-1.9.1.min.js"></script>
+        <script src="utility_admin-dashboard/assets/plugins/jquery/jquery-migrate-1.1.0.min.js"></script>
+        <script src="utility_admin-dashboard/assets/plugins/jquery-ui/ui/minified/jquery-ui.min.js"></script>
+        <script src="utility_admin-dashboard/assets/plugins/bootstrap/js/bootstrap.min.js"></script>
+        <!--[if lt IE 9]>
+                <script src="utility_admin-dashboard/assets/crossbrowserjs/html5shiv.js"></script>
+                <script src="utility_admin-dashboard/assets/crossbrowserjs/respond.min.js"></script>
+                <script src="utility_admin-dashboard/assets/crossbrowserjs/excanvas.min.js"></script>
+        <![endif]-->
+        <script src="utility_admin-dashboard/assets/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+        <script src="utility_admin-dashboard/assets/plugins/gritter/js/jquery.gritter.min.js"></script>
+        <!-- ================== END BASE JS ================== -->
+
+        <!-- ================== BEGIN PAGE LEVEL JS ================== -->
+        <!-- D3.js library -->
+        <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+
+        <script src="utility_admin-dashboard/assets/plugins/jstree/dist/jstree.min.js"></script>
+        <script src="utility_admin-dashboard/assets/js/apps.min.js"></script>
+        <script src="utility_admin-dashboard/assets/plugins/sparkline/jquery.sparkline.js"></script>
+        <script src="libJS/spinalcore.browser.js"></script>
+        <script src="utility_admin-dashboard/SpinalAdmin/admin.models.js"></script>
+        <script src="utility_admin-dashboard/SpinalAdmin/admin.views.js"></script>
+        <script src="utility_admin-dashboard/admin-dashboard.js"></script>
+        <script src="utility_admin-dashboard/config.js"></script>
+
+        <!-- is-sim utils -->
+        <script src="utility_is-sim/config.js"></script>
+        <script src="libJS/js.cookie.js"></script>
+
+        <!-- models / processes -->
+        <script src="js-libraries/all.is-sim.js"></script>
+        <script src="js-libraries/all.models.js"></script>
+        <script src="js-libraries/all.processes.js"></script>
+
+        <!-- ================== END PAGE LEVEL JS ================== -->
+
+        <script>
+            $(document).ready(function() {
+                    App.init();
+                    admin_dashboard.launch_organ();
+            });
+        </script>
+    </body>
+</html>
