@@ -16,29 +16,32 @@
 
 
 class ViewAdminFileSystem extends Process
-    constructor: ( @data, @SelectedData ) ->
+    constructor: ( @data, @SelectedData, MnM ) ->
         super(@data)
         $('#jstree2-ajax').jstree
-                  "core":
-                      "themes": { "responsive": false },
-                      "check_callback": true,
-                      'data': @tojson(@data)
-                  "types": 
-                      "default": { "icon": "fa fa-folder text-warning fa-lg" },
-                      "directory": { "icon": "fa fa-folder text-warning fa-lg" },
-                      "file": { "icon": "fa fa-file text-warning fa-lg" }
-                  "plugins": [ "state", "types" ]
-                  
-        
-            
-  
+          "contextmenu": {"items": MnM.customMenu }
+          "core":
+              "themes": { "responsive": false },
+              "check_callback": true,
+              'data': @tojson(@data)
+          "types":
+              "default": { "icon": "fa fa-folder text-warning fa-lg" },
+              "directory": { "icon": "fa fa-folder text-warning fa-lg" },
+              "file": { "icon": "fa fa-file text-warning fa-lg" }
+          "plugins": [ "contextmenu", "state", "types" ]
+
+          # "core" :
+          #   'force_text' : true,
+          #   "check_callback" : true
+          # "plugins" : [ "contextmenu", "types" ]
+
     onchange: ()->
         if @data.has_been_modified()
             new_data = @tojson(@data, 0)
             $('#jstree2-ajax').jstree(true).settings.core.data = new_data
             $('#jstree2-ajax').jstree(true).refresh()
             $('#jstree2-ajax').jstree('open_all')
-            
+
             _selected_data = @SelectedData
             _data = @data
             $("#jstree2-ajax").bind(
@@ -50,18 +53,18 @@ class ViewAdminFileSystem extends Process
                         r.push(data.instance.get_node(data.selected[i]).id)
                     _selected_data.push r[0]
             )
-   
-           
+
+
     tojson: (_data, level)->
         tree_data = []
-        for child in _data.children     
+        for child in _data.children
             tree_data.push
                 "id" :  child.id.get()
                 "text" :  child.text.get()
                 "state" : @get_state(child)
                 "type"  : @get_type(child, level)
-                "children" : if child.children.length != 0 then @tojson(child, 1) else [] 
-        
+                "children" : if child.children.length != 0 then @tojson(child, 1) else []
+
         return tree_data
 
      get_type: (_data, level)->

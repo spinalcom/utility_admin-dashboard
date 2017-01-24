@@ -16,29 +16,59 @@
 
 
 launch_spinal_admin = (  ) ->
-    
+
     #Root File_System_Model
     root_dir = new AdminTreeItem
     root_dir.id.set 0
     root_dir.text.set "root"
     root_dir.type.set "directory"
     root_dir.state.opened.set true
-    
+
     folder_list = new Lst
     folder_list.push root_dir
     process_list = []
     selected_data = new Lst
+    MnM = new Menu_and_modals(selected_data);
 
     conn.load_or_make_dir "/", (dir, err)->
         #récupération séquentielle et synchrone du systeme de fichier virtuel du hub, construction de root_dir et association de process à chaque directory observés
-        process_list.push new BuildAdminFileSystem dir, root_dir, folder_list, process_list, true 
-        
+        process_list.push new BuildAdminFileSystem dir, root_dir, folder_list, process_list, true
+
         #construction de l'arbre treejs à partir du root_dir construit à l'étape précédente
-        VFS = new ViewAdminFileSystem root_dir, selected_data 
-        
+        VFS = new ViewAdminFileSystem root_dir, selected_data, MnM
+
         #affichage du contenu du noeud de l'arbre selectionné
-        VSD = new ViewSelectedData selected_data 
+        VSD = new ViewSelectedData selected_data
 
         spinalCore.load(conn, "Status", (MS)->
             VSH = new ViewStatsHub MS
         )
+
+launch_spinal_dasboard = (  ) ->
+
+    #Root File_System_Model
+    root_dir = new AdminTreeItem
+    root_dir.id.set 0
+    root_dir.text.set "root"
+    root_dir.type.set "directory"
+    root_dir.state.opened.set true
+
+    folder_list = new Lst
+    folder_list.push root_dir
+    process_list = []
+    selected_data = new Lst
+    MnM = new Menu_and_modals(selected_data);
+
+    conn.load_or_make_dir "/", (dir, err)->
+        #récupération séquentielle et synchrone du systeme de fichier virtuel du hub, construction de root_dir et association de process à chaque directory observés
+        process_list.push new BuildAdminFileSystem dir, root_dir, folder_list, process_list, true
+
+        # construction de l'arbre treejs à partir du root_dir construit à l'étape précédente
+        VFS = new ViewAdminFileSystem root_dir, selected_data, MnM
+
+        #affichage du contenu du noeud de l'arbre selectionné
+        VSD = new ViewSelectedData selected_data
+
+        # spinalCore.load(conn, "Status", (MS)->
+        #     VSH = new ViewStatsHub MS
+        # )

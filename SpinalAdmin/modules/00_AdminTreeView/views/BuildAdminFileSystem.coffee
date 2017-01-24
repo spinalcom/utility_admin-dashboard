@@ -21,28 +21,28 @@ class BuildAdminFileSystem extends Process
         @nb_iter = 0
         @uper_list = []
         @change = false
-        
+
         if run_init
             @builData  @directory, @list[0], 0
-        
+
 
     onchange: ()->
         if @directory.has_been_modified() and @change
             console.log "change directory n= " + @directory.model_id
 #             location.reload()
-#             console.log @data.id.get()    
+#             console.log @data.id.get()
 #             @init()
             @builData  @directory, @data, 0
-                
+
         @change = true
-    
-    add_item_to_list: (data)-> 
+
+    add_item_to_list: (data)->
         for d in @list
             if d.id.get() == data.id.get()
                 return
-        @list.push data 
-        
-    add_binded_process: (model, data)-> 
+        @list.push data
+
+    add_binded_process: (model, data)->
         #est ce que le process suivant ce model existe deja
         for p in @process_list
             if p.directory.model_id == model.model_id
@@ -52,10 +52,10 @@ class BuildAdminFileSystem extends Process
             return
 #         console.log "add process"
         @process_list.push (new BuildAdminFileSystem model, data, @list, @process_list, false)
-    
-    init: ()-> 
+
+    init: ()->
         @data.children.clear()
-    
+
     find_data: (child, data_)->
 #         console.log "model_id = " + child.model_id
         for i in [0 ... data_.children.length]
@@ -64,24 +64,24 @@ class BuildAdminFileSystem extends Process
             if Number(d.id.get()) == child.model_id
                return i
         return -1
-      
-    
+
+
     #chargement séquentiel synchrone de l'arbre
-    builData: (m, data_, index)-> 
-        _ref = this  
+    builData: (m, data_, index)->
+        _ref = this
 #         data_.id.set m.model_id
         data_.directory_id.set m.model_id
         @add_item_to_list data_
         @add_binded_process m, data_
-        
-        
+
+
         #test pour savoir si un children a été supprimé
         if m.length < data_.children.length
             for i in [0 ... data_.children.length]
                 d = data_.children[i]
                 exist = false
                 for j in [0 ... m.length]
-                    child = child = m[j] 
+                    child = child = m[j]
                     if Number(d.id.get()) == child.model_id
                       exist = true
                       break
@@ -89,51 +89,50 @@ class BuildAdminFileSystem extends Process
                     console.log "supression du children " + d.text.get()
                     data_.children.remove d
                     break
-                    
-        
+
+
         if m.length != 0
             #test des modifications sur l'arbre
             for i in [index ... m.length]
                 if m[i]?
-                    child = m[i] 
-                    
+                    child = m[i]
+                    if (child instanceof Val || child.name instanceof Val)
+                      continue;
+
                     num = @find_data(child, data_)
                     if num != -1  # l'element existe déja, on change simplement le nom
 #                         console.log "modif du nom de l'item"
                         item = data_.children[num]
                         item.text.set child.name.get()
-                        
+
                     else  # l'element n'existe pas, on le créer et on charge ses enfant
 #                         console.log "création d'un item"
                         item = new AdminTreeItem
                         data_.children.push item
-                        
+
                         item.id.set child.model_id
                         item.text.set child.name.get()
                         item.link_model = child
-                        
-                        
+
                         if child._info.model_type.get() == "Directory"
                             item.type.set "directory"
                             item.state.opened.set true
                             item.state.disabled.set false
-                            
+
                             child._ptr.load (dir)->
                                 _ref.builData( dir, item, 0)
-                            @uper_list.push {"model":m, "data":data_, "index":i+1} 
+                            @uper_list.push {"model":m, "data":data_, "index":i+1}
                             return
                         else
                             item.type.set "file"
                             item.state.opened.set false
                             item.state.disabled.set true
-                    
-                
+
+
                 @nb_iter += 1
-        
+
 #       console.log @uper_list.length
         length = @uper_list.length
         if @uper_list.length > 0
             test = @uper_list.pop()
             @builData( test["model"], test["data"],  test["index"] )
-
-        

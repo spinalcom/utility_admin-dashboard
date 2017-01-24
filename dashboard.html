@@ -48,6 +48,7 @@
             <a href="#" class="navbar-brand" style="padding: 5px;">
               <img src="utility_admin-dashboard/assets/img/logo_medium.png" alt="SpinalCom" style="height: 42px;">
             </a>
+          </div>
           <dir>
             <h1 class="page-header"><span id="span-username"></span></h1>
             <button
@@ -64,118 +65,39 @@
       </div>
 
       <!-- begin #sidebar -->
-      <div id="sidebar" class="sidebar">
+      <div id="sidebar" class="sidebar" style="background: white;height: 600px;">
         <div data-scrollbar="true" data-height="100%">
           <ul class="nav">
             <li class="has-sub active">
               <a href="javascript:;">
-                <b class="caret pull-right"></b>
+                <!-- <b class="caret pull-right"></b> -->
                 <i class="fa fa-laptop"></i>
                 <span>Navigation</span>
               </a>
-              <ul class="sub-menu">
-                <li class="active">
-                  <a href="admin-dashboard.html">Database</a>
-                </li>
-                <!-- <li>
-                  <a href="admin-dashboard.html">Users</a>
-                </li> -->
-              </ul>
             </li>
           </ul>
-          <ul class="nav">
-            <li class="nav-profile">
-              <hr style="padding-top: 10px; padding-botton: 10px;"/>
-              <button type="button" class="btn btn-primary btn-block" id="btn_garbage_collector">
-                <i class="fa fa-trash-o"></i>
-                Garbage Collector
-              </button>
-            </li>
-            <li class="nav-profile">
-              <button type="button" class="btn btn-primary btn-block" id="btn_backup">
-                <i class="fa fa-archive"></i>
-                Back Up
-              </button>
-            </li>
-            <li>
-              <a href="javascript:;" class="sidebar-minify-btn" data-click="sidebar-minify">
-                <i class="fa fa-angle-double-left"></i>
-              </a>
-            </li>
-          </ul>
+          <div style="overflow: auto; background-color: white;">
+            <!-- <div style="height: 600px;"> -->
+            <div id="jstree2-ajax"></div>
+            <!-- </div> -->
+          </div>
+
         </div>
       </div>
-      <div class="sidebar-bg"></div>
+      <div class="sidebar-bg" style="background: white;"></div>
       <!-- end #sidebar -->
 
       <!-- begin #content -->
       <div id="content" class="content ">
-      <!--   <ol class="breadcrumb pull-right">
+        <ol class="breadcrumb pull-right">
           <li>
             <a href="javascript:;">Home</a>
           </li>
           <li class="active">Dashboard</li>
         </ol>
-        <h1 class="page-header"><span id="span-username"></span></h1> -->
-
         <div class="row">
+
           <div class="col-md-12">
-            <div class="panel panel-inverse ">
-              <div class="panel-heading">
-                <div class="panel-heading-btn">
-                  <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-default" data-click="panel-expand">
-                    <i class="fa fa-expand"></i>
-                  </a>
-                  <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse">
-                    <i class="fa fa-minus"></i>
-                  </a>
-                  <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-danger" data-click="panel-remove">
-                    <i class="fa fa-times"></i>
-                  </a>
-                </div>
-                <h4 class="panel-title">Stats</h4>
-              </div>
-              <div class="panel-body">
-                <table class="table">
-                  <col width="10%">
-                  <col width="10%">
-                  <col width="80%">
-                  <thead>
-                    <tr>
-                      <th>Label</th>
-                      <th>Value</th>
-                      <th>Trend</th>
-                    </tr>
-                  </thead>
-                  <tbody id="admin_details"></tbody>
-                </table>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-3">
-            <div class="panel panel-inverse">
-              <div class="panel-heading">
-                <div class="panel-heading-btn">
-                  <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-default" data-click="panel-expand">
-                    <i class="fa fa-expand"></i>
-                  </a>
-                  <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse">
-                    <i class="fa fa-minus"></i>
-                  </a>
-                  <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-danger" data-click="panel-remove">
-                    <i class="fa fa-times"></i>
-                  </a>
-                </div>
-                <h4 class="panel-title">File System</h4>
-              </div>
-              <div class="panel-body" style="overflow: auto">
-                <div style="height: 600px;">
-                  <div id="jstree2-ajax"></div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-9">
             <div class="panel panel-inverse">
               <div class="panel-heading">
                 <div class="panel-heading-btn">
@@ -205,56 +127,6 @@
                       <button type="button" class="btn btn-primary" id="search_tree_next">&gt;</button>
                     </div>
                   </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-12">
-
-            <div class="panel panel-inverse">
-              <div class="panel-heading">
-                <div class="panel-heading-btn">
-                  <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-default" data-click="panel-expand">
-                    <i class="fa fa-expand"></i>
-                  </a>
-                  <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse">
-                    <i class="fa fa-minus"></i>
-                  </a>
-                  <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-danger" data-click="panel-remove">
-                    <i class="fa fa-times"></i>
-                  </a>
-                </div>
-                <h4 class="panel-title">User Manager</h4>
-              </div>
-              <div class="panel-body">
-                <div>
-                  <h4>User List</h4>
-                  <div style="overflow: auto">
-                    <table class="table">
-                      <thead>
-                        <tr>
-                          <th style="width:10px; padding:10px 0px;"></th>
-                          <th>Id</th>
-                          <th>User</th>
-                          <th>Password</th>
-                          <th>State</th>
-                          <th>Home</th>
-                          <th>Type</th>
-                        </tr>
-                      </thead>
-                      <tbody id="user_list"></tbody>
-                    </table>
-                  </div>
-                  <br/>
-                  <!-- <div class="input-group"> -->
-                  <form action="javascript:usermanager_view.add();" class="input-group">
-                    <h4>New User</h4>
-
-                    <input id="input_user" type="text" class="form-control" placeholder="User">
-                    <input id="input_password" type="text" class="form-control" placeholder="Password">
-                    <button id="btn_push_user" class="btn btn-success">add</button>
-                  </form>
-                  <!-- </div> -->
                 </div>
               </div>
             </div>
