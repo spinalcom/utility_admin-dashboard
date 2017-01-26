@@ -89,14 +89,7 @@
 
       <!-- begin #content -->
       <div id="content" class="content ">
-        <ol class="breadcrumb pull-right">
-          <li>
-            <a href="javascript:;">Home</a>
-          </li>
-          <li class="active">Dashboard</li>
-        </ol>
         <div class="row">
-
           <div class="col-md-12">
             <div class="panel panel-inverse">
               <div class="panel-heading">
@@ -158,6 +151,47 @@
     </div>
     <!-- end page container -->
 
+    <!-- modals -->
+    <div class="modal fade" id="modal-share" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title">Sharing settings</h4>
+          </div>
+          <div class="modal-body">
+            <form>
+              <h5>Target user:</h5>
+              <div class="form-group">
+                <input type="text" class="form-control" id="modal-share-target">
+              </div>
+              <h5>Name shown in Target user folder:</h5>
+              <div class="form-group">
+                <input type="text" class="form-control" id="modal-share-file">
+              </div>
+              <h5>Sharing Type:</h5>
+              <div class="block">
+                  <label for="modal-share-read" class="control-label label-modal">Read :</label>
+                  <input id="modal-share-read" data-group-cls="btn-group-sm" type="checkbox" data-switch-always />
+              </div>
+              <div class="block">
+                <label for="modal-share-write" class="control-label label-modal">Write :</label>
+                <input id="modal-share-write" data-group-cls="btn-group-sm" type="checkbox" data-switch-always />
+              </div>
+              <div class="block">
+                <label for="modal-share-share" class="control-label label-modal">Share :</label>
+                <input id="modal-share-share" data-group-cls="btn-group-sm" type="checkbox" data-switch-always />
+              </div>
+            </form>
+            <h5 id="modal-share-error" class="btn-warning" ></h5>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary" onclick="mnm.send_share()">Validate</button>
+          </div>
+        </div>
+      </div>
+    </div>
     <!-- ================== BEGIN BASE JS ================== -->
     <script src="utility_admin-dashboard/assets/plugins/jquery/jquery-1.9.1.min.js"></script>
     <script src="utility_admin-dashboard/assets/plugins/jquery/jquery-migrate-1.1.0.min.js"></script>
@@ -166,6 +200,7 @@
     <!--[if lt IE 9]> <script src="utility_admin-dashboard/assets/crossbrowserjs/html5shiv.js"></script> <script src="utility_admin-dashboard/assets/crossbrowserjs/respond.min.js"></script> <script src="utility_admin-dashboard/assets/crossbrowserjs/excanvas.min.js"></script> <![endif]-->
     <script src="utility_admin-dashboard/assets/plugins/slimscroll/jquery.slimscroll.min.js"></script>
     <script src="utility_admin-dashboard/assets/plugins/gritter/js/jquery.gritter.min.js"></script>
+    <script src="utility_admin-dashboard/assets/plugins/bootstrap-checkbox/dist/js/bootstrap-checkbox.min.js"></script>
     <!-- ================== END BASE JS ================== -->
 
     <!-- ================== BEGIN PAGE LEVEL JS ================== -->
@@ -196,6 +231,7 @@
       $(document).ready(function () {
         App.init();
         dashboard.launch_organ();
+        $(':checkbox').checkboxpicker();
       });
     </script>
   </body>

@@ -13,9 +13,35 @@
 # GNU Lesser General Public License for more details.
 # You should have received a copy of the GNU General Public License
 # along with Soda. If not, see <http://www.gnu.org/licenses/>.
+mnm = {};
 
 class Menu_and_modals
   constructor:(@selected_data)->
+    mnm = this;
+    @flag = 0;
+    $('#modal-share-read').on('change', ()->
+      if $(this).prop('checked')
+        mnm.flag |= spinalCore.right_flag.RD
+      else
+        mnm.flag &= ~spinalCore.right_flag.RD
+      console.log (mnm.flag);
+    )
+    $('#modal-share-write').on('change', ()->
+      if $(this).prop('checked')
+        mnm.flag |= spinalCore.right_flag.WR
+      else
+        mnm.flag &= ~spinalCore.right_flag.WR
+      console.log (mnm.flag);
+    )
+    $('#modal-share-share').on('change', ()->
+      if $(this).prop('checked')
+        mnm.flag |= spinalCore.right_flag.AD
+      else
+        mnm.flag &= ~spinalCore.right_flag.AD
+      console.log (mnm.flag);
+    )
+    $('#modal-share').on('shown.bs.modal', ()-> $('#modal-share-target').focus() );
+
     @customMenu = (node)=>
       items =
         shareItem:
@@ -24,33 +50,45 @@ class Menu_and_modals
           separator_after : false
           label: "Share"
           action: ()=>
-            this._shareItem this.getModel_by_model_id this.selected_data
+            this._shareItem()
         createItem:
           separator_before : false
           separator_after : false
           icon : 'fa fa-file text-warning',
           label: "Create"
           action: ()=>
-            this._createItem this.getModel_by_model_id this.selected_data
+            this._createItem()
         deleteItem:
           separator_before : true
           separator_after : false
           icon : 'fa fa-trash text-danger',
           label: "Delete"
           action: ()=>
-            this._deleteItem this.getModel_by_model_id this.selected_data
+            this._deleteItem()
       return items;
 
-  _shareItem: (data)=>
-    console.log "SHARE ITEM";
-    console.log data;
-    spinalCore.share_model(conn, data, data.name.get(), spinalCore.right_flag.RD, "a@a");
+  _shareItem: ()=>
+    $('#modal-share-read').prop('checked', false);
+    $('#modal-share-write').prop('checked', false);
+    $('#modal-share-share').prop('checked', false);
+    document.getElementById('modal-share-target').value = "";
+    mnm.getModel_by_model_id mnm.selected_data
+    document.getElementById('modal-share-file').value =
+      mnm.getModel_by_model_id(mnm.selected_data).name;
+    @flag = 0;
 
-  _createItem: (data)=>
+    # console.log $('#modal-share-read');
+    $('#modal-share').modal();
+    # $("#modal-share").on('show.bs.modal', ()->
+    #   alert('The modal is about to be shown.');
+
+    # spinalCore.share_model(conn, data, data.name.get(), spinalCore.right_flag.RD, "a@a");
+
+  _createItem: ()=>
     console.log "CREATE ITEM";
     console.log data;
 
-  _deleteItem: (data)=>
+  _deleteItem: ()=>
     console.log "DELETE ITEM";
     console.log data;
 
@@ -59,38 +97,35 @@ class Menu_and_modals
       if parseInt(m.model_id) == parseInt(@selectedID)
         return m
 
-# function customMenu(node) {
-#   // The default set of all items
-#   var items = {
-#     // renameItem: { // The "rename" menu item
-#     //   label: "Rename",
-#     //   action: function() {
-#     //     console.log("HEHE rename");
-#     //   }
-#     // },
-#     deleteItem: { // The "delete" menu item
-#       label: "Delete",
-#       action: function(obj) {
-#         console.log("HEHE delete");
-#         console.log(obj.reference);
-#         // if ($(this.get_node(obj)).hasClass("folder"))
-#         //   return; // cancel action
-#
-#       }
-#     },
-#     shareItem: { // The "delete" menu item
-#       label: "Share",
-#       action: function(obj) {
-#         console.log("HEHE delete");
-#         console.log(obj.reference);
-#         // if ($(this.get_node(obj)).hasClass("folder"))
-#         //   return; // cancel action
-#
-#       }
-#     }
-#
-#   };
-#
-#   return items;
-# }
-#
+  send_share:()=>
+    user = document.getElementById('modal-share-target').value;
+    file = document.getElementById('modal-share-file').value;
+    flag = mnm.flag;
+    data = mnm.getModel_by_model_id mnm.selected_data
+    error = document.getElementById('modal-share-error');
+    error.innerHTML = "";
+    _error = "Error ";
+    found_error = false;
+    if user == ""
+      if found_error == false
+        found_error = true;
+      _error += "invalid target username"
+    if file == ""
+      if found_error == false
+        found_error = true;
+      else
+        _error += ", "
+      _error += "invalid filename"
+    if flag == 0
+      if found_error == false
+        found_error = true;
+      else
+        _error += ", "
+      _error += "add Right Types to give"
+
+    if found_error == true
+      error.innerHTML = _error + '.';
+      return;
+
+    spinalCore.share_model(conn, data, file, flag, user);
+    $('#modal-share').modal('hide');
