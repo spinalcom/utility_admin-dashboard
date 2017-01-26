@@ -51,20 +51,20 @@ class Menu_and_modals
           label: "Share"
           action: ()=>
             this._shareItem()
-        createItem:
-          separator_before : false
-          separator_after : false
-          icon : 'fa fa-file text-warning',
-          label: "Create"
-          action: ()=>
-            this._createItem()
-        deleteItem:
-          separator_before : true
-          separator_after : false
-          icon : 'fa fa-trash text-danger',
-          label: "Delete"
-          action: ()=>
-            this._deleteItem()
+        # createItem:
+        #   separator_before : false
+        #   separator_after : false
+        #   icon : 'fa fa-file text-warning',
+        #   label: "Create"
+        #   action: ()=>
+        #     this._createItem()
+        # deleteItem:
+        #   separator_before : true
+        #   separator_after : false
+        #   icon : 'fa fa-trash text-danger',
+        #   label: "Delete"
+        #   action: ()=>
+        #     this._deleteItem()
       return items;
 
   _shareItem: ()=>
@@ -77,12 +77,7 @@ class Menu_and_modals
       mnm.getModel_by_model_id(mnm.selected_data).name;
     @flag = 0;
 
-    # console.log $('#modal-share-read');
     $('#modal-share').modal();
-    # $("#modal-share").on('show.bs.modal', ()->
-    #   alert('The modal is about to be shown.');
-
-    # spinalCore.share_model(conn, data, data.name.get(), spinalCore.right_flag.RD, "a@a");
 
   _createItem: ()=>
     console.log "CREATE ITEM";
