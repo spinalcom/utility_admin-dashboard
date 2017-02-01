@@ -6,7 +6,7 @@ class ViewStatsHub extends Process
     constructor: (@model) ->
         super(@model)
         # get elements
-        @el_list = document.getElementById "user_list"
+        # @el_list = document.getElementById "user_list"
         _viewStatHub = this;
         @model_sparkline_value = [];
         @options =
@@ -66,8 +66,6 @@ class ViewStatsHub extends Process
 
     onchange: ()->
         if @model.has_been_modified()
-            @make_table();
-
             @make_admin_model_details()
             @getSparkline(@model.data.get());
             @make_sparkline()
@@ -82,20 +80,6 @@ class ViewStatsHub extends Process
                     title: 'Notification'
                     text: 'Backup Done.'
 
-    getSparkline: (m)->
-        @model_sparkline_value["count_users"] = @getSparklineData m["count_users"]
-        @model_sparkline_value["count_models"] = @getSparklineData m["count_models"]
-        @model_sparkline_value["count_sessions"] = @getSparklineData m["count_sessions"]
-        @model_sparkline_value["ram_usage_res"] = @getSparklineData m["ram_usage_res"]
-        @model_sparkline_value["ram_usage_virt"] = @getSparklineData m["ram_usage_virt"]
-
-    getSparklineData: (str)->
-
-        res = []
-        tmp = str.split(";");
-        for data in tmp
-            res.push data if data != ""
-        return res;
 
     make_table_line: (el, label, data)->
         tr = document.createElement "tr"
@@ -121,18 +105,17 @@ class ViewStatsHub extends Process
         @make_table_line(el[0], "ram_usage_res", @model.ram_usage_res.get())
         @make_table_line(el[0], "ram_usage_virt", @model.ram_usage_virt.get())
 
-    make_table: ()->
-      data = ""
-      for user in @model.users
-          data += "<tr> <td style=\"padding:10px 0px;\"><i class=\"fa fa-trash-o\" onclick=\"_viewStatHub.delete_account(\'" + user.email.get() + "\')\" ></i></td> <th scope=\"row\">#{user.id.get()}</th> <td>#{user.email.get()}</td> <td>#{user.password.get()}</td> <td>#{user.state.get()}</td> <td>#{user.home.get()}</td> <td>#{user.type.get()}</td>  </tr>"
-      @el_list.innerHTML = data;
-    delete_account: (user_id)->
-      SpinalUserManager.delete_account_by_admin("http://" + config.host + ":" + config.port + "/", user_id, config.user_id, config.password, (response)->
-        $.gritter.add
-          title: 'Success'
-          text: "User #{user_id} deleted."
-      , (err)->
-        $.gritter.add
-          title: 'Error'
-          text: "An error happend when trying to delete the User #{user_id}."
-      );
+    getSparkline: (m)->
+        @model_sparkline_value["count_users"] = @getSparklineData m["count_users"]
+        @model_sparkline_value["count_models"] = @getSparklineData m["count_models"]
+        @model_sparkline_value["count_sessions"] = @getSparklineData m["count_sessions"]
+        @model_sparkline_value["ram_usage_res"] = @getSparklineData m["ram_usage_res"]
+        @model_sparkline_value["ram_usage_virt"] = @getSparklineData m["ram_usage_virt"]
+
+    getSparklineData: (str)->
+
+        res = []
+        tmp = str.split(";");
+        for data in tmp
+            res.push data if data != ""
+        return res;

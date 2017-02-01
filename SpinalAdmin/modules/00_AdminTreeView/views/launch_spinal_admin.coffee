@@ -40,8 +40,11 @@ launch_spinal_admin = (  ) ->
         #affichage du contenu du noeud de l'arbre selectionné
         VSD = new ViewSelectedData selected_data
 
-        spinalCore.load(conn, "Status", (MS)->
+        spinalCore.load(conn, "/etc/Status", (MS)->
             VSH = new ViewStatsHub MS
+        )
+        spinalCore.load(conn, "/etc/users", (user)->
+            UMP = new UserMnagerPanel user
         )
 
 launch_spinal_dasboard = (  ) ->
@@ -68,7 +71,3 @@ launch_spinal_dasboard = (  ) ->
 
         #affichage du contenu du noeud de l'arbre selectionné
         VSD = new ViewSelectedData selected_data
-
-        # spinalCore.load(conn, "Status", (MS)->
-        #     VSH = new ViewStatsHub MS
-        # )
