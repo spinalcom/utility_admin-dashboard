@@ -67,15 +67,41 @@ class Menu_and_modals
         #     this._deleteItem()
       return items;
 
+  create_right_col: (flag, flagType) =>
+    if flag & flagType
+      return "<td>Yes</td>"
+    return "<td>No</td>"
+
+
+  create_rightsItem_tab: (ptr, data)=>
+    tab = document.getElementById('modal-share-rightsItem');
+    res = "";
+    for ur in data
+      flag = ur.flag.get();
+      res += "<tr>"
+      res += "<td>" + ur.user.id.get() + "</td>"
+      res += "<td>" + ur.user.name.get() + "</td>"
+      res += mnm.create_right_col(ur.flag.get(), spinalCore.right_flag.RD);
+      res += mnm.create_right_col(ur.flag.get(), spinalCore.right_flag.WR);
+      res += mnm.create_right_col(ur.flag.get(), spinalCore.right_flag.AD);
+      res += "</tr>"
+    tab.innerHTML = res;
+
   _shareItem: ()=>
     $('#modal-share-read').prop('checked', false);
     $('#modal-share-write').prop('checked', false);
     $('#modal-share-share').prop('checked', false);
     document.getElementById('modal-share-target').value = "";
-    mnm.getModel_by_model_id mnm.selected_data
+    # mnm.getModel_by_model_id mnm.selected_data
     document.getElementById('modal-share-file').value =
       mnm.getModel_by_model_id(mnm.selected_data).name;
     @flag = 0;
+    _data = mnm.getModel_by_model_id(mnm.selected_data)._ptr.data.value
+    spinalCore.load_right(conn, _data, (res)=>
+        mnm.create_rightsItem_tab(_data, res);
+      , (err)=>
+        console.log "Error load_right";
+      );
 
     $('#modal-share').modal();
 

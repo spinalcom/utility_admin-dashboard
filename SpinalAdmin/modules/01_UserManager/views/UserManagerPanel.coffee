@@ -17,7 +17,7 @@ class UserMnagerPanel extends Process
           <td style=\"padding:10px 0px;\"> \
           <i class=\"fa fa-trash-o\" onclick=\"_userMnagerPanel.delete_account(\'" + user.name.get() + "\')\" ></i> \
           </td> \
-          <th scope=\"row\">#{user.id.get()}</th> \
+          <td scope=\"row\">#{user.id.get()}</td> \
           <td>#{user.name.get()}</td> \
           <td>#{user.home.get()}</td> \
           </tr>";
