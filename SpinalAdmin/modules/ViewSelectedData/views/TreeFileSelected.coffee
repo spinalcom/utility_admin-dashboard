@@ -128,6 +128,8 @@ class TreeFileSelected extends Process
         @update(@root);
 
     remove_node: (p, c)->
+        if !p
+          return;
         if p.children
           i = p.children.length - 1
           while i >= 0
