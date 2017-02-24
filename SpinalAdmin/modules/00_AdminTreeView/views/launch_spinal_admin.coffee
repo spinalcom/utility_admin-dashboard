@@ -28,7 +28,7 @@ launch_spinal_admin = (  ) ->
     folder_list.push root_dir
     process_list = []
     selected_data = new Lst
-    MnM = new Menu_and_modals(selected_data);
+    MnM = new Modals_and_Menu(selected_data, folder_list);
 
     conn.load_or_make_dir "/", (dir, err)->
         #récupération séquentielle et synchrone du systeme de fichier virtuel du hub, construction de root_dir et association de process à chaque directory observés
@@ -60,7 +60,7 @@ launch_spinal_dasboard = (  ) ->
     folder_list.push root_dir
     process_list = []
     selected_data = new Lst
-    MnM = new Menu_and_modals(selected_data);
+    MnM = new Modals_and_Menu(selected_data, folder_list);
 
     conn.load_or_make_dir "/", (dir, err)->
         #récupération séquentielle et synchrone du systeme de fichier virtuel du hub, construction de root_dir et association de process à chaque directory observés

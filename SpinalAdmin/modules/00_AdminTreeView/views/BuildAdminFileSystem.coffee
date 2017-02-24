@@ -28,7 +28,7 @@ class BuildAdminFileSystem extends Process
 
     onchange: ()->
         if @directory.has_been_modified() and @change
-            console.log "change directory n= " + @directory.model_id
+            # console.log "change directory n= " + @directory.model_id
 #             location.reload()
 #             console.log @data.id.get()
 #             @init()
@@ -65,6 +65,14 @@ class BuildAdminFileSystem extends Process
                return i
         return -1
 
+    getName: (model)=>
+      res = model.name.get();
+      if model?._info?.model_type?.get() == "Path"
+        _info = model._info
+        if (_info.remaining.get() != 0)
+          percent = (_info.to_upload.get() - _info.remaining.get()) / _info.to_upload.get()
+          res += " (#{percent.toFixed(2)}%)"
+      return res
 
     #chargement séquentiel synchrone de l'arbre
     builData: (m, data_, index)->
@@ -86,7 +94,7 @@ class BuildAdminFileSystem extends Process
                       exist = true
                       break
                 if not exist
-                    console.log "supression du children " + d.text.get()
+                    # console.log "supression du children " + d.text.get()
                     data_.children.remove d
                     break
 
@@ -103,7 +111,7 @@ class BuildAdminFileSystem extends Process
                     if num != -1  # l'element existe déja, on change simplement le nom
 #                         console.log "modif du nom de l'item"
                         item = data_.children[num]
-                        item.text.set child.name.get()
+                        item.text.set @getName(child)
 
                     else  # l'element n'existe pas, on le créer et on charge ses enfant
 #                         console.log "création d'un item"
@@ -111,7 +119,7 @@ class BuildAdminFileSystem extends Process
                         data_.children.push item
 
                         item.id.set child.model_id
-                        item.text.set child.name.get()
+                        item.text.set @getName(child)
                         item.link_model = child
 
                         if child._info.model_type.get() == "Directory"
@@ -123,6 +131,14 @@ class BuildAdminFileSystem extends Process
                                 _ref.builData( dir, item, 0)
                             @uper_list.push {"model":m, "data":data_, "index":i+1}
                             return
+                        else if child._info.model_type.get() == "Path"
+                            item.type.set "path"
+                            item.state.opened.set false
+                            item.state.disabled.set true
+                        else if child._info.model_type.get() == "Session"
+                            item.type.set "session"
+                            item.state.opened.set false
+                            item.state.disabled.set true
                         else
                             item.type.set "file"
                             item.state.opened.set false

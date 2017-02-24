@@ -342,11 +342,49 @@
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary" onclick="mnm.send_share()">Validate</button>
+            <button type="button" class="btn btn-primary" onclick="mnm.modal_share.send_share()">Validate</button>
           </div>
         </div>
       </div>
     </div>
+
+
+
+    <div class="modal fade" id="modal-new" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title">New...</h4>
+          </div>
+          <div class="modal-body modal-new-cont">
+            <div class="row modal-new-head">
+                <div class="modal-new-head-div mx-auto">
+                  <button id="modal-new-head-folder" type="button" class="btn btn-primary modal-new-head-btn">New Folder</button>
+                </div>
+                <div class="modal-new-head-div mx-auto">
+                  <button id="modal-new-head-project" type="button" class="btn btn-primary modal-new-head-btn">New Project Session</button>
+                </div>
+                <div class="modal-new-head-div mx-auto">
+                  <button id="modal-new-head-upload" type="button" class="btn btn-primary modal-new-head-btn">Upload Files</button>
+                </div>
+            </div>
+            <hr />
+            <div id="modal-new-content">
+            </div>
+
+            <h5 id="modal-share-error" class="btn-warning" ></h5>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary" onclick="mnm.modal_new.validate()">Validate</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
     <!-- ================== BEGIN BASE JS ================== -->
     <script src="utility_admin-dashboard/assets/plugins/jquery/jquery-1.9.1.min.js"></script>
     <script src="utility_admin-dashboard/assets/plugins/jquery/jquery-migrate-1.1.0.min.js"></script>
@@ -356,6 +394,8 @@
     <script src="utility_admin-dashboard/assets/plugins/slimscroll/jquery.slimscroll.min.js"></script>
     <script src="utility_admin-dashboard/assets/plugins/gritter/js/jquery.gritter.min.js"></script>
     <script src="utility_admin-dashboard/assets/plugins/bootstrap-checkbox/dist/js/bootstrap-checkbox.min.js"></script>
+    <script src="utility_admin-dashboard/assets/plugins/spin/spin.min.js"></script>
+    <script src="utility_admin-dashboard/assets/plugins/spin/jquery.spin.js"></script>
     <!-- ================== END BASE JS ================== -->
 
     <!-- ================== BEGIN PAGE LEVEL JS ================== -->

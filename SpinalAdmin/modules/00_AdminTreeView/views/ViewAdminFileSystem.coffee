@@ -27,7 +27,9 @@ class ViewAdminFileSystem extends Process
           "types":
               "default": { "icon": "fa fa-folder text-warning fa-lg" },
               "directory": { "icon": "fa fa-folder text-warning fa-lg" },
-              "file": { "icon": "fa fa-file text-warning fa-lg" }
+              "file": { "icon": "fa fa-file text-warning fa-lg" },
+              "session": { "icon": "fa fa-desktop text-success fa-lg" },
+              "path": { "icon": "fa fa-download text-success fa-lg" },
           "plugins": [ "contextmenu", "state", "types" ]
 
           # "core" :
