@@ -46,6 +46,7 @@ launch_spinal_admin = (  ) ->
         spinalCore.load(conn, "/etc/users", (user)->
             UMP = new UserMnagerPanel user
         )
+        new ViewAppModule()
 
 launch_spinal_dasboard = (  ) ->
 
