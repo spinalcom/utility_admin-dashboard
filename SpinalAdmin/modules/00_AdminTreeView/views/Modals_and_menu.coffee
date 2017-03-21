@@ -56,7 +56,7 @@ class Modals_and_Menu
           separator_after : false
           label: "Share"
           action: ()=>
-            this.modal_share._shareItem()
+            this.modal_share._shareItem(mnm.getModel_by_model_id(mnm.selected_data))
       items.deleteItem =
           separator_before : true
           separator_after : false

@@ -219,6 +219,11 @@ class TreeFileSelected extends Process
       node = @svgGroup.selectAll('g.node').data(@nodes, (d) ->
         d.id || (d.id = ++_Tree.i)
       )
+      menu = [
+        title: 'share'
+        action: (elm, d, i)->
+          mnm.modal_share._shareItem FileSystem._objects[d.server_id]
+      ]
 
       nodeEnter = node.enter().append('g').attr('class', 'node').attr('transform', (d) ->
         'translate(' + source.y0 + ',' + source.x0 + ')'
@@ -230,7 +235,7 @@ class TreeFileSelected extends Process
             return 'lightsteelblue'
         else
             return '#fff'
-      ).on('click', @click)
+      ).on('click', @click).on('contextmenu', d3.contextMenu(menu))
 
       nodeEnter.append('text').attr('x', (d) ->
         if d.children or d._children then -10 else 10
@@ -238,7 +243,7 @@ class TreeFileSelected extends Process
         if d.children or d._children then 'end' else 'start'
       ).text((d) ->
         d.name
-      ).style('fill-opacity', 0).on('click', @click_focus)
+      ).style('fill-opacity', 0).on('click', @click_focus).on('contextmenu', d3.contextMenu(menu))
 
       node.select('text').attr('x', (d) ->
         if d.children or d._children then -10 else 10
