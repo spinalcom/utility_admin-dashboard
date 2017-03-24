@@ -40,18 +40,35 @@ class Modal_Share
       res += mnm.modal_share.create_right_col(ur.flag.get(), spinalCore.right_flag.WR);
       res += mnm.modal_share.create_right_col(ur.flag.get(), spinalCore.right_flag.AD);
       res += "</tr>"
+      @namelist.push ur.user.name.get()
     tab.innerHTML = res;
 
-  _shareItem: ()=>
+
+
+  _shareItem: (@mod)=>
+    @namelist = []
     $('#modal-share-read').prop('checked', false);
     $('#modal-share-write').prop('checked', false);
     $('#modal-share-share').prop('checked', false);
     document.getElementById('modal-share-target').value = "";
+    $( "#modal-share-target" ).autocomplete(
+      minLength: 0
+      position:
+        my : "right top"
+        at: "right bottom"
+      source: mnm.modal_share.namelist
+    );
     # mnm.getModel_by_model_id mnm.selected_data
-    document.getElementById('modal-share-file').value =
-      mnm.getModel_by_model_id(mnm.selected_data).name;
+    file_name = document.getElementById('modal-share-file')
+    if @mod.name
+      file_name.value = @mod.name;
+    else
+      file_name.value = @mod.constructor.name;
     @flag = 0;
-    _data = mnm.getModel_by_model_id(mnm.selected_data)._ptr.data.value
+    if @mod instanceof File
+      _data = @mod._ptr.data.value
+    else
+      _data = @mod._server_id
     spinalCore.load_right(conn, _data, (res)=>
         mnm.modal_share.create_rightsItem_tab(_data, res);
       , (err)=>
@@ -64,7 +81,7 @@ class Modal_Share
     user = document.getElementById('modal-share-target').value;
     file = document.getElementById('modal-share-file').value;
     flag = mnm.modal_share.flag;
-    data = mnm.getModel_by_model_id mnm.selected_data
+    data = @mod
     error = document.getElementById('modal-share-error');
     error.innerHTML = "";
     _error = "Error ";
