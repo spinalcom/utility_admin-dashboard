@@ -40,13 +40,24 @@ class Modal_Share
       res += mnm.modal_share.create_right_col(ur.flag.get(), spinalCore.right_flag.WR);
       res += mnm.modal_share.create_right_col(ur.flag.get(), spinalCore.right_flag.AD);
       res += "</tr>"
+      @namelist.push ur.user.name.get()
     tab.innerHTML = res;
 
+
+
   _shareItem: (@mod)=>
+    @namelist = []
     $('#modal-share-read').prop('checked', false);
     $('#modal-share-write').prop('checked', false);
     $('#modal-share-share').prop('checked', false);
     document.getElementById('modal-share-target').value = "";
+    $( "#modal-share-target" ).autocomplete(
+      minLength: 0
+      position:
+        my : "right top"
+        at: "right bottom"
+      source: mnm.modal_share.namelist
+    );
     # mnm.getModel_by_model_id mnm.selected_data
     file_name = document.getElementById('modal-share-file')
     if @mod.name
@@ -54,7 +65,7 @@ class Modal_Share
     else
       file_name.value = @mod.constructor.name;
     @flag = 0;
-    if @mod instanceof Ptr
+    if @mod instanceof File
       _data = @mod._ptr.data.value
     else
       _data = @mod._server_id
