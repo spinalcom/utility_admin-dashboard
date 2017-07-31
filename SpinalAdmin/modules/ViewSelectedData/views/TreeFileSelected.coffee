@@ -222,6 +222,7 @@ class TreeFileSelected extends Process
       menu = [
         title: 'share'
         action: (elm, d, i)->
+          console.log FileSystem._objects[d.server_id]
           mnm.modal_share._shareItem FileSystem._objects[d.server_id]
       ]
 
