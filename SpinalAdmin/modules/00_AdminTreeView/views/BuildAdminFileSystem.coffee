@@ -85,19 +85,22 @@ class BuildAdminFileSystem extends Process
 
         #test pour savoir si un children a été supprimé
         # if m.length < data_.children.length
-        for i in [0 ... data_.children.length]
+        # for i in [0 ... data_.children.length]
+        i = 0;
+        while (i < data_.children.length)
             d = data_.children[i]
             exist = false
             for j in [0 ... m.length]
-                child = child = m[j]
+                child = m[j]
                 if Number(d.id.get()) == child.model_id
                   exist = true
                   break
             if not exist
                 # console.log "supression du children " + d.text.get()
                 data_.children.remove d
-                break
-
+                i = 0
+            else
+                i++
 
         if m.length != 0
             #test des modifications sur l'arbre
