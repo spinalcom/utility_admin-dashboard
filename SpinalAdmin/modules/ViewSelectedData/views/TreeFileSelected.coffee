@@ -1,8 +1,9 @@
 
 _Tree = {}
 class TreeFileSelected extends Process
-    constructor: ( @model ) ->
-        super(@model)
+    constructor: ( model ) ->
+        super(model)
+        @model = model
         @el = document.getElementById("file-content")
         _Tree = this;
         @depthLength = [];

@@ -16,8 +16,9 @@
 
 
 class ViewSelectedData extends Process
-    constructor: ( @SelectedData ) ->
-        super(@SelectedData)
+    constructor: ( SelectedData ) ->
+        super(SelectedData)
+        @SelectedData = SelectedData
         @tree = null;
         @tree_model = null;
 

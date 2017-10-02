@@ -16,8 +16,9 @@
 
 
 class BuildAdminFileSystem extends Process
-    constructor: ( @directory, @data, @list, @process_list, run_init = false ) ->
-        super(@directory)
+    constructor: ( directory, @data, @list, @process_list, run_init = false ) ->
+        super(directory)
+        @directory = directory
         @nb_iter = 0
         @uper_list = []
         @change = false

@@ -3,8 +3,9 @@
 _viewStatHub = {};
 
 class ViewStatsHub extends Process
-    constructor: (@model) ->
-        super(@model)
+    constructor: (model) ->
+        super(model)
+        @model = model
         # get elements
         # @el_list = document.getElementById "user_list"
         _viewStatHub = this;

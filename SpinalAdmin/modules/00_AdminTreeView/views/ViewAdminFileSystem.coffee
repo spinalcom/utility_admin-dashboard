@@ -16,8 +16,9 @@
 
 
 class ViewAdminFileSystem extends Process
-    constructor: ( @data, @SelectedData, MnM ) ->
-        super(@data)
+    constructor: ( data, @SelectedData, MnM ) ->
+        super(data)
+        @data = data
         $('#jstree2-ajax').jstree
           "contextmenu": {"items": MnM.customMenu }
           "core":

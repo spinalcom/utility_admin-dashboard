@@ -2,8 +2,9 @@
 _userMnagerPanel = {};
 
 class UserMnagerPanel extends Process
-    constructor: (@model) ->
-        super(@model)
+    constructor: (model) ->
+        super(model)
+        @model = model
         @el_list = document.getElementById "user_list"
         _userMnagerPanel = this;
     onchange: ()->
